@@ -4,7 +4,7 @@ Monitor-only: every prompt Codex submits is scanned by Rocotal before the model 
 
 ## Install
 
-1. Add the marketplace: `codex plugin marketplace add https://github.com/Rocotal/rocotal-prompt-scan`
+1. Add the marketplace: `codex plugin marketplace add https://github.com/HuzefaRoco/rocotal-prompt-scan`
 2. Install it: `codex plugin add rocotal-prompt-scan@rocotal`
 3. Restart Codex and approve the hook once with `/hooks`.
 
