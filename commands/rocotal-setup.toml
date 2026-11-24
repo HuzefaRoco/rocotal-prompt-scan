@@ -1,0 +1,34 @@
+description = "Write the Rocotal prompt-scan settings (gateway URL, agent key, timeout) to disk"
+prompt = '''
+Help me set up Rocotal prompt scanning for this Codex session. It is monitor-only: prompts are still sent to the model, and nothing is blocked.
+
+1. In one message, ask me for:
+   - the Rocotal gateway scan URL (an http or https URL, ending in /integrations/prompt-scan)
+   - my agent key (it starts with rct_; create one on Rocotal's AI apps and agents page)
+   - optionally a timeout in seconds (default 5, maximum 60; an empty answer keeps 5)
+   Then wait for my answer before running anything.
+
+2. Find where the installed plugin lives. The command runs in an agent shell, so CLAUDE_PLUGIN_ROOT is empty here; resolve the path yourself:
+
+   a. Run `codex plugin list --json`. It prints {"installed":[...],"available":[...]}; pick the entry whose "name" is "rocotal-prompt-scan" (its "pluginId" starts with "rocotal-prompt-scan@").
+   b. If no such entry exists, stop and tell me to install the rocotal-prompt-scan plugin first.
+   c. Build the plugin root as <CODEX_HOME>/plugins/cache/<marketplaceName>/<name>/<version>. CODEX_HOME may be unset, so use %USERPROFILE%\.codex on Windows and ~/.codex elsewhere.
+   d. The setup script is <plugin root>/hooks/rocotal-config.js. Confirm that file exists before running it; if it does not, report the path you tried and stop.
+
+3. Write the values by running that script with --write.
+
+   POSIX shell:
+       ROCOTAL_SETUP_GATEWAY_URL="<url>" ROCOTAL_SETUP_AGENT_KEY="<key>" ROCOTAL_SETUP_TIMEOUT_SECONDS="<seconds>" node "<plugin root>/hooks/rocotal-config.js" --write
+
+   Windows PowerShell: set each variable on its own line, then run node:
+       $env:ROCOTAL_SETUP_GATEWAY_URL = "<url>"
+       $env:ROCOTAL_SETUP_AGENT_KEY = "<key>"
+       $env:ROCOTAL_SETUP_TIMEOUT_SECONDS = "<seconds>"
+       node "<plugin root>/hooks/rocotal-config.js" --write
+
+   It prints "Wrote <path>" on success and "roco-prompt-scan: <message>" on failure.
+
+4. Never echo the agent key back, and never repeat it in a summary. Report only whether the write succeeded and the path it wrote. If the command failed, report its message and ask me for the corrected value.
+
+5. Tell me to restart Codex and approve the hook once with /hooks, so the UserPromptSubmit scan starts running.
+'''

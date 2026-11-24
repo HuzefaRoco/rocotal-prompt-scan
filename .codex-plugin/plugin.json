@@ -1,0 +1,14 @@
+{
+  "name": "rocotal-prompt-scan",
+  "version": "0.1.0",
+  "description": "Scans every Codex prompt with Rocotal before the model reads it.",
+  "hooks": "./hooks/hooks.json",
+  "interface": {
+    "displayName": "Rocotal Prompt Scan",
+    "shortDescription": "Scan prompts with Rocotal before the model reads them",
+    "longDescription": "Monitor-only: every prompt Codex submits is scanned by Rocotal before the model reads it, so Guardrails evidence labels its sensitivity. Nothing is blocked, and a prompt still reaches the model when Rocotal is unreachable.",
+    "developerName": "Rocotal",
+    "category": "Security",
+    "capabilities": ["Lifecycle hooks"]
+  }
+}

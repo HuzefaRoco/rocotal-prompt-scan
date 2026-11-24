@@ -1,0 +1,16 @@
+{
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node -e \"require(require('path').join(process.env.CLAUDE_PLUGIN_ROOT.split(String.fromCharCode(92)).join('/'), 'hooks/rocotal-prompt-scan.js'))\"",
+            "timeout": 30,
+            "statusMessage": "Scanning prompt with Rocotal"
+          }
+        ]
+      }
+    ]
+  }
+}
